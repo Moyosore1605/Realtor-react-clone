@@ -7,6 +7,7 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import Offers from './pages/Offers'
 import ForgotPassword from './pages/ForgotPassword'
+import Header from './components/Header'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
   return (
     <>
     <Router>
+      <Header/>
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/profile' element={<Profile/>}/>
@@ -23,7 +25,6 @@ function App() {
         <Route path='/forgotpassword' element={<ForgotPassword/>}/>
       </Routes>
     </Router>
-      <h1>something to be cooked</h1>
     </>
   )
 }
