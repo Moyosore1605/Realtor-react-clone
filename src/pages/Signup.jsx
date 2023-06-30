@@ -62,7 +62,7 @@ export default function Signup() {
                         </div>
                         <div className='flex justify-between whitespace-nowrap text-sm sm:text-lg'>
                             <p className='mb-6'>Have an account? 
-                                <Link to='/signin' className='text-red-500 hover:text-red-800 transition duration-200 ml-1 ease-in-out'>Sign in</Link>
+                                <Link to='/login' className='text-red-500 hover:text-red-800 transition duration-200 ml-1 ease-in-out'>Sign in</Link>
                             </p>
                             {/* <p>
                                 <Link to='/forgotpassword' className='text-blue-500 hover:text-blue-800 transition duration-200 ml-1 ease-in-out'>Forgot password?</Link>

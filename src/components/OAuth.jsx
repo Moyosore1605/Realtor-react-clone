@@ -1,7 +1,7 @@
 import React from 'react';
 import {FcGoogle} from 'react-icons/fc';
 import { toast } from 'react-toastify';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
 import {db} from '../firebase'
 import {doc,getDoc,setDoc,serverTimestamp} from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom';
@@ -23,6 +23,7 @@ const OAuth = ()=>{
             toast.success('Signed in successfully with google')
             navigate('/')
         } catch (error) {
+            // console.log(error.code);
             toast.error('Could not sign in with google')
         }
     }
