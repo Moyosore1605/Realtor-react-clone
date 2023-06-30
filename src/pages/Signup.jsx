@@ -1,14 +1,45 @@
 import React, {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import OAuth from '../components/OAuth'
 import {AiFillEye,AiFillEyeInvisible} from 'react-icons/ai'
+import {getAuth, createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
+import {db} from '../firebase'
+import { serverTimestamp, setDoc, doc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 export default function Signup() {
     const [formData,setFormData] = useState({name:'',email:'',password:''})
     const [showPassword, setShowPassword] = useState(false)
     const {name,email,password} = formData
+    const navigate = useNavigate()
     const onChange = (e)=>{
         setFormData({...formData,[e.target.id]:e.target.value})
+    }
+    const onSubmit = async(e)=>{
+        e.preventDefault()
+        try {
+            const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            updateProfile(auth.currentUser, {displayName:name})
+            const user = userCredential.user;
+            const formDataCopy = {...formData}
+            delete formDataCopy.password
+            formDataCopy.timeStamp = serverTimestamp();
+            await setDoc(doc(db,'users',user.uid),formDataCopy);
+            toast.success('Account created successfully');
+            navigate('/')
+        } catch (error) {
+            console.log(error.code);
+            if (error.code === 'auth/email-already-in-use') {
+                toast.error('Email already in use');
+            }
+            else if( error.code === 'auth/missing-email'){
+                toast.error('please fill in the email field');
+            }
+            else if (error.code === 'auth/weak-password') {
+                toast.error('Password should be at least 6 characters');
+            }
+        }
     }
     return (
         <section>
@@ -18,8 +49,8 @@ export default function Signup() {
                     <img src="https://images.unsplash.com/flagged/photo-1564767609342-620cb19b2357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=773&q=80" className='w-full rounded-2xl'/>
                 </div>
                 <div className='w-full md:w-[67%] lg:w-[40%] lg:ml-20'>
-                    <form>
-                        <input className='w-full md:mb-6 px-4 py-2 text-xl text-gray-400 border-gray-300 bg-white rounded transition ease-in-out' type='text' id='name' value={name} 
+                    <form onSubmit={onSubmit}>
+                        <input required className='w-full md:mb-6 px-4 py-2 text-xl text-gray-400 border-gray-300 bg-white rounded transition ease-in-out' type='text' id='name' value={name} 
                         onChange={onChange} placeholder='Full name'/>
                         <input className='w-full md:mb-6 px-4 py-2 text-xl text-gray-400 border-gray-300 bg-white rounded transition ease-in-out' type='email' id='email' value={email} 
                         onChange={onChange} placeholder='Email address'/>
