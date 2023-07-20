@@ -4,6 +4,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 import { db } from '../firebase'
+import { FcHome } from 'react-icons/fc'
+import { Link } from 'react-router-dom'
 
 export default function Profile() {
     const auth = getAuth()
@@ -39,7 +41,6 @@ export default function Profile() {
                     <form>
                         <input disabled = {!changeDetails} onChange={onChange} type="text" id='name' value={name} className={`w-full px-4 py-2 border-gray-300 text-gray-700 rounded bg-white transition ease-in-out mb-6 ${changeDetails && "bg-red-200 focus:bg-red-200"}`}/>
                         <input disabled type="email" id='email' value={email} className='w-full px-4 py-2 border-gray-300 text-gray-700 rounded bg-white transition ease-in-out mb-6'/>
-                    </form>
                     <div className='flex justify-between whitespace-nowrap text-sm sm:text-md'>
                         <p className='flex items-center md:text-sm'>Do you want to change your name?
                             <span className='text-red-600 hover:text-red-800 transition ease-in-out duration-200 ml-1 cursor-pointer' onClick={()=>{
@@ -51,6 +52,13 @@ export default function Profile() {
                         </p>
                         <p onClick={onLogout} className='text-blue-600 hover:text-blue-800 transition ease-in-out cursor-pointer'>Sign out</p>
                     </div>
+                    </form>
+                    <button type='submit' className='flex mt-4 font-medium text-white w-full bg-blue-600 shadow-md hover:bg-blue-800 text-sm rounded transition ease-in-out hover:shadow-lg'>
+                        <Link to='/create-listing' className='flex items-center w-full px-4 py-2 justify-center'>
+                        <FcHome className='text-3xl rounded-full bg-red-200 border-2 p-1 mr-2'/>
+                        SELL OR RENT YOUR HOME
+                        </Link>
+                    </button>
                 </div>
             </section>
         </>
