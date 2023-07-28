@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import Spinner from '../components/Spinner';
 import '../App.css'
+import { toast } from 'react-toastify';
 
 export default function CreateListing() {
     const [formData,setFormData] = useState({type:'rent',name:'',bedrooms:1,bathrooms:1,parking:false,furnished:false,address:'',description:'',offer:false,regularPrice:0,discountedPrice:0})
@@ -11,7 +13,7 @@ export default function CreateListing() {
     return (
         <main className='max-w-md mx-auto px-2'>
             <h1 className='text-3xl font-bold text-center mt-6'>Create Listing</h1>
-            <form className='mt-6'>
+            <form className='mt-6' onSubmit={onSubmit}>
                 <label htmlFor="button" className='font-medium'>Sell/Rent</label>
                 <div className='flex mb-6'>
                     <button className={`px-7 py-3 font-medium text-sm shadow-sm rounded hover:shadow-lg focus:shadow-lg w-full transition ease-in-out ${type==='rent'?'bg-white text-black':
@@ -55,7 +57,6 @@ export default function CreateListing() {
                     <textarea id='address' value={address} onChange={onChange} placeholder='Address' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
                     border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600'></textarea>
                 </div>
-    
                 <div>
                     <label htmlFor="input" className='text-lg font-medium'>Description</label><br />
                     <input id='description' value={description} onChange={onChange} placeholder='Description' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
@@ -92,7 +93,7 @@ export default function CreateListing() {
                     <input type="file" id='images' className='w-full px-3 py-1 text-gray-700 bg-white border border-gray-300 rounded transition focus:border-slate-600
                     ease-in-out' accept='.jpg,.jpeg,.png' onChange={onChange} multiple required/>
                 </div>
-                <button type='submit' className='w-full mb-6 px-7 py-3 bg-blue-600 text-white font-medium text-sm rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-800 
+                <button type='submit' className='w-full mb-6 px-7 py-3 bg-blue-60 text-white font-medium text-sm rounded shadow-md hover:bg-blue-800 hover:shadow-lg focus:bg-blue-800 
                 focus:shadow-lg active:bg-blue-900 active:shadow-lg transition ease-in-out'>Create Listing</button>
             </form>
         </main>
