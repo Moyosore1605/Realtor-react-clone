@@ -10,7 +10,6 @@ import ForgotPassword from './pages/ForgotPassword'
 import Header from './components/Header'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CreateListing from './pages/CreateListing'
 
 function App() {
 
