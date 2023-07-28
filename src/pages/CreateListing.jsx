@@ -1,63 +1,17 @@
 import React, { useState } from 'react'
-import Spinner from '../components/Spinner';
 import '../App.css'
-import { toast } from 'react-toastify';
 
 export default function CreateListing() {
-    const [geoLocationEnabled,setGeoLocationEnabled] = useState(true);
-    const [loading,setLoading] = useState(false);
-    const [formData,setFormData] = useState({
-        type:'rent',name:'',bedrooms:1,bathrooms:1,parking:false,furnished:false,address:'',description:'',offer:false,regularPrice:0,discountedPrice:0,latitude:0,longitude:0,images:{},
-    })
-    const {type,name,bedrooms,bathrooms,parking,furnished,address,description,offer,regularPrice,discountedPrice,latitude,longitude,images} = formData;
+    const [formData,setFormData] = useState({type:'rent',name:'',bedrooms:1,bathrooms:1,parking:false,furnished:false,address:'',description:'',offer:false,regularPrice:0,discountedPrice:0})
+    const {type,name,bedrooms,bathrooms,parking,furnished,address,description,offer,regularPrice,discountedPrice} = formData;
 
 
-    const onChange = (e)=>{
-        let boolean = null;
-        if (e.target.value === 'true'){
-            boolean = true;
-        }
-        if (e.target.value === 'false'){
-            boolean = false;
-        }
-        //Files
-        if (e.target.files) {
-            setFormData({...formData,images:e.target.files})
-        }
-        //Other inputs
-        if (!e.target.files) {
-            setFormData({...formData,[e.target.id]:boolean ?? e.target.value})
-        }
-    }
-    const onSubmit = async(e)=>{
-        e.preventDefault();
-        setLoading(true);
-        if (discountedPrice >= regularPrice) {
-            setLoading(false);
-            toast.error('Discounted price should be less than regular price');
-            return;
-        }
-        if (images.length > 6) {
-            setLoading(false);
-            toast.error('Maximum of 6 images are allowed');
-            return;
-        }
-        let geoLocation = {};
-        let location;
-        if (geoLocationEnabled) {
-            const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${import.meta.env.REACT_APP_API}`);
-            const data = response.json();
-            console.log(data);
-        }
-    }
-    if (loading){
-        return <Spinner/>
-    }
+    const onChange = ()=>{}
 
     return (
         <main className='max-w-md mx-auto px-2'>
             <h1 className='text-3xl font-bold text-center mt-6'>Create Listing</h1>
-            <form className='mt-6' onSubmit={onSubmit}>
+            <form className='mt-6'>
                 <label htmlFor="button" className='font-medium'>Sell/Rent</label>
                 <div className='flex mb-6'>
                     <button className={`px-7 py-3 font-medium text-sm shadow-sm rounded hover:shadow-lg focus:shadow-lg w-full transition ease-in-out ${type==='rent'?'bg-white text-black':
@@ -101,20 +55,7 @@ export default function CreateListing() {
                     <textarea id='address' value={address} onChange={onChange} placeholder='Address' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
                     border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600'></textarea>
                 </div>
-                {!geoLocationEnabled && (
-                    <div className='flex space-x-6 mb-6'>
-                        <div>
-                            <label htmlFor="input" className='text-lg font-medium'>Latitude</label><br />
-                            <input className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600' 
-                            type="number" id='latitude' value={latitude} onChange={onChange} required min="-90" max="90"/>
-                        </div>
-                        <div>
-                            <label htmlFor="input" className='text-lg font-medium'>Longitude</label><br />
-                            <input className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600' 
-                            type="number" id='longitude' value={longitude} onChange={onChange} required min="-180" max='180'/>
-                        </div>
-                    </div>
-                )}
+    
                 <div>
                     <label htmlFor="input" className='text-lg font-medium'>Description</label><br />
                     <input id='description' value={description} onChange={onChange} placeholder='Description' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
