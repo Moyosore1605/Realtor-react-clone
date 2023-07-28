@@ -1,25 +1,21 @@
 import React, { useState } from 'react'
-import Spinner from '../components/Spinner';
 import '../App.css'
-import { toast } from 'react-toastify';
 
 export default function CreateListing() {
     const [formData,setFormData] = useState({type:'rent',name:'',bedrooms:1,bathrooms:1,parking:false,furnished:false,address:'',description:'',offer:false,regularPrice:0,discountedPrice:0})
-    const {type,name,bedrooms,bathrooms,parking,furnished,address,description,offer,regularPrice,discountedPrice} = formData;
-
-
+    const {type,name,bedrooms,bathrooms,parking,furnished,address,description,offer,regularPrice,discountedPrice} = formData
     const onChange = ()=>{}
 
     return (
         <main className='max-w-md mx-auto px-2'>
             <h1 className='text-3xl font-bold text-center mt-6'>Create Listing</h1>
-            <form className='mt-6' onSubmit={onSubmit}>
+            <form className='mt-6'>
                 <label htmlFor="button" className='font-medium'>Sell/Rent</label>
                 <div className='flex mb-6'>
                     <button className={`px-7 py-3 font-medium text-sm shadow-sm rounded hover:shadow-lg focus:shadow-lg w-full transition ease-in-out ${type==='rent'?'bg-white text-black':
                     'bg-slate-600 text-white'}`} type='button' id='type' value='sale' onClick={onChange}>SELL</button>
                     <button className={`px-7 py-3 font-medium text-sm shadow-sm rounded hover:shadow-lg focus:shadow-lg w-full transition ease-in-out ${type==='sale'?'bg-white text-black':
-                    'bg-slate-600 text-white'} ms-3`} type='button' id='type' value='rent' onClick={onChange}>RENT</button>
+                    'bg-slate-600 text-white'} ms-3`} type='button' id='type' value='sale' onClick={onChange}>RENT</button>
                 </div>
                 <div>
                 <label htmlFor="input" className='text-lg font-medium'>Name</label><br />
@@ -54,8 +50,8 @@ export default function CreateListing() {
                 </div>
                 <div>
                     <label htmlFor="input" className='text-lg font-medium'>Address</label><br />
-                    <textarea id='address' value={address} onChange={onChange} placeholder='Address' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
-                    border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600'></textarea>
+                    <input id='address' value={address} onChange={onChange} placeholder='Address' required className='w-full px-4 py-2 text-xl text-gray-700 bg-white 
+                    border border-gray-300 rounded transition ease-in-out mb-6 focus:border-slate-600'/>
                 </div>
                 <div>
                     <label htmlFor="input" className='text-lg font-medium'>Description</label><br />
